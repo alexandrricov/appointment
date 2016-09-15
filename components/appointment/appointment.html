@@ -1,0 +1,46 @@
+<link rel="import" href="addresses.html">
+<link rel="import" href="services.html">
+<link rel="import" href="calendar.html">
+<link rel="import" href="specialists.html">
+<link rel="import" href="form.html">
+
+<template id="le-appointment">
+  <style>
+    #appointment {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 320px;
+      background-color: aliceblue;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow-x: scroll;
+    }
+  </style>
+  <section id="appointment">
+    <h1>Appointment</h1>
+    <appointment-addresses></appointment-addresses>
+    <appointment-services></appointment-services>
+    <appointment-calendar></appointment-calendar>
+    <appointment-specialists></appointment-specialists>
+    <appointment-form></appointment-form>
+  </section>
+</template>
+
+<script>
+  (function(window, document) {
+    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+    const addressesTpl = ownerDocument.querySelector('#le-appointment');
+
+    class Addresses extends HTMLElement {
+      createdCallback() {
+        const clone = document.importNode(addressesTpl.content, true);
+        const root = this.createShadowRoot();
+        root.appendChild(clone);
+      }
+    }
+
+    document.registerElement('x-appointment', Addresses);
+  })(window, document);
+</script>

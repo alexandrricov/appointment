@@ -1,0 +1,43 @@
+<template id="form-tpl">
+  <section>
+    <h2><a href="#"><-</a>Appointment</h2>
+    <dl>
+      <dt>Date:</dt>
+      <dd>23 august, tuesday</dd>
+      <dt>Time:</dt>
+      <dd>15:00-16:00</dd>
+      <dt>Services:</dt>
+      <dd>Service 1, Service 2</dd>
+      <dt>Specialist:</dt>
+      <dd>Specialist 1</dd>
+      <dt>Price:</dt>
+      <dd>$28</dd>
+    </dl>
+    <form action="#">
+      <input type="text" placeholder="Name">
+      <input type="text" placeholder="Phone">
+      <input type="email" placeholder="Email">
+      <input type="text" placeholder="Comment">
+      <button type="submit">Sign up</button>
+    </form>
+  </section>
+</template>
+
+<script>
+  (function(window, document) {
+    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+    const appointmentTpl = ownerDocument.querySelector('#form-tpl');
+
+    class Form extends HTMLElement {
+      createdCallback() {
+        const clone = document.importNode(appointmentTpl.content, true);
+        const root = this.createShadowRoot();
+        root.appendChild(clone);
+      }
+    }
+
+    document.registerElement('appointment-form', Form);
+  })(window, document);
+</script>
+
+

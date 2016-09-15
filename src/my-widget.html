@@ -1,0 +1,55 @@
+<template>
+  <style>
+    p {
+      color: orange;
+    }
+  </style>
+  <p>I'm in Shadow DOM. My markup was stamped from a &lt;template&gt;.</p>
+  <button type="button">btn</button>
+</template>
+
+<script>
+  var ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+
+  class MyWidget extends HTMLElement {
+    // Fires when an instance of the element is created.
+    createdCallback() {
+      console.log('createdCallback');
+      // this.createShadowRoot().innerHTML = template;
+
+      var template = ownerDocument.querySelector('template');
+      var clone = document.importNode(template.content, true);
+      var root = this.createShadowRoot();
+      root.appendChild(clone);
+
+      clone.addEventListener('click', this.clickHandler);
+
+      console.log('atrr', this.getAttribute('attr'));
+    }
+    // Fires when an instance was inserted into the document.
+    attachedCallback() {
+      console.log('attachedCallback');
+    };
+    // Fires when an instance was detached from the document.
+    detachedCallback() {
+      console.log('detachedCallback');
+    }
+    // Fires when an attribute was added, removed, or updated.
+    attributeChangedCallback(attrName, oldVal, newVal) {
+      console.log('attr changed', arguments)
+    };
+
+    myFunc() {
+      return 'ololo';
+    }
+
+    clickHandler() {
+      var event = new CustomEvent("change");
+
+      // dispatch event
+      this.dispatchEvent(event);
+    }
+  }
+
+  document.registerElement('my-widget', MyWidget);
+</script>

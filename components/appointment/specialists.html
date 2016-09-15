@@ -1,0 +1,27 @@
+<template id="specialists-tpl">
+  <section>
+    <h2><a href="#"><-</a>Select specialist</h2>
+    <ol>
+      <li><a href="#"><img src="http://fakeimg.pl/30/">Specialist 1</a></li>
+      <li><a href="#"><img src="http://fakeimg.pl/30/">Specialist 2</a></li>
+      <li><a href="#"><img src="http://fakeimg.pl/30/">Specialist 3</a></li>
+    </ol>
+  </section>
+</template>
+
+<script>
+  (function(window, document) {
+    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+    const specialistsTpl = ownerDocument.querySelector('#specialists-tpl');
+
+    class Specialists extends HTMLElement {
+      createdCallback() {
+        const clone = document.importNode(specialistsTpl.content, true);
+        const root = this.createShadowRoot();
+        root.appendChild(clone);
+      }
+    }
+
+    document.registerElement('appointment-specialists', Specialists);
+  })(window, document);
+</script>
