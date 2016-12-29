@@ -25,14 +25,110 @@
       font: menu;
       font-size: var(--font-size);
     }
+
+    #appointment {
+      box-sizing: border-box;
+      height: 100%;
+    }
+
+    h1 {
+      background-color: green;
+      margin: 0;
+      text-align: center;
+      color: #fff;
+      padding: 10px 0;
+    }
   </style>
 
   <link rel="manifest" href="/manifest.json">
 
-  <!--<script src="webcomponents.min.js"></script>-->
-  <link rel="import" href="src/pages/appointment.html">
+  <link rel="import" href="src/pages/addresses.html">
+  <link rel="import" href="src/pages/services.html">
+  <link rel="import" href="src/pages/calendar.html">
+  <link rel="import" href="src/pages/specialists.html">
+  <link rel="import" href="src/pages/form.html">
 </head>
 <body>
-  <x-appointment />
+  <section id="appointment">
+    <h1>Appointment</h1>
+  </section>
+
+  <script>
+    function initAddresses(_appointment) {
+      const node = document.createElement('appointment-addresses');
+      node.goForward = (e) => {
+        console.log(e);
+
+        _appointment.removeChild(node);
+        initServices(_appointment);
+      };
+
+      _appointment.appendChild(node);
+    }
+
+    function initServices(_appointment) {
+      const node = document.createElement('appointment-services');
+      node.goBack = () => {
+        _appointment.removeChild(node);
+        initAddresses(_appointment);
+      };
+
+      node.goForward = (e) => {
+        console.log(e);
+        _appointment.removeChild(node);
+        initCalendar(_appointment);
+      };
+
+      _appointment.appendChild(node);
+    }
+
+    function initCalendar(_appointment) {
+      const node = document.createElement('appointment-calendar');
+      node.goBack = () => {
+        _appointment.removeChild(node);
+        initServices(_appointment);
+      };
+
+      node.goForward = (e) => {
+        console.log(e);
+        _appointment.removeChild(node);
+        initSpecialists(_appointment);
+      };
+
+      _appointment.appendChild(node);
+    }
+
+    function initSpecialists(_appointment) {
+      const node = document.createElement('appointment-specialists');
+      node.goBack = () => {
+        _appointment.removeChild(node);
+        initCalendar(_appointment);
+      };
+
+      node.goForward = (e) => {
+        console.log(e);
+        _appointment.removeChild(node);
+        initForm(_appointment);
+      };
+
+      _appointment.appendChild(node);
+    }
+
+    function initForm(_appointment) {
+      const node = document.createElement('appointment-form');
+      node.goBack = () => {
+        _appointment.removeChild(node);
+        initSpecialists(_appointment);
+      };
+
+      node.goForward = (e) => {
+        alert(JSON.stringify(e));
+      };
+
+      _appointment.appendChild(node);
+    }
+
+    initAddresses(document.querySelector('#appointment'));
+  </script>
 </body>
 </html>

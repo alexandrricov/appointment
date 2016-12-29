@@ -21,11 +21,13 @@
 </template>
 
 <script>
+  (function(window, document) {
+    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+
     class Services extends HTMLElement {
       constructor() {
         super();
 
-        const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
         const shadowRoot = this.attachShadow({mode: 'closed'});
         shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#services-tpl').content, true));
 
@@ -47,6 +49,6 @@
     }
 
     customElements.define('appointment-services', Services);
-//    document.registerElement('appointment-services', Services);
+  })(window, document);
 </script>
 

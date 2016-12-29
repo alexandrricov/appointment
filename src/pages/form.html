@@ -26,32 +26,34 @@
 </template>
 
 <script>
-  class Form extends HTMLElement {
-    constructor() {
-      super();
+  (function(window, document) {
+    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
 
-      const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
-      const shadowRoot = this.attachShadow({mode: 'closed'});
-      shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#form-tpl').content, true));
+    class Form extends HTMLElement {
+      constructor() {
+        super();
 
-      const title = shadowRoot.querySelector('component-title');
-      title.goBack = () => this.goBack();
+        const shadowRoot = this.attachShadow({mode: 'closed'});
+        shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#form-tpl').content, true));
 
-      shadowRoot.querySelector('#submit').addEventListener('click', () => {
-        this.goForward({
-          name: this.form.children.name.value,
-          phone: this.form.children.phone.value,
-          email: this.form.children.email.value,
-          comment: this.form.children.comment.value,
+        const title = shadowRoot.querySelector('component-title');
+        title.goBack = () => this.goBack();
+
+        shadowRoot.querySelector('#submit').addEventListener('click', () => {
+          this.goForward({
+            name: this.form.children.name.value,
+            phone: this.form.children.phone.value,
+            email: this.form.children.email.value,
+            comment: this.form.children.comment.value,
+          });
         });
-      });
 
-      this.form = shadowRoot.querySelector('#form');
+        this.form = shadowRoot.querySelector('#form');
+      }
     }
-  }
 
-  customElements.define('appointment-form', Form);
-//    document.registerElement('appointment-form', Form);
+    customElements.define('appointment-form', Form);
+  })(window, document);
 </script>
 
 

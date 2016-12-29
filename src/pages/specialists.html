@@ -12,24 +12,26 @@
 </template>
 
 <script>
-  class Specialists extends HTMLElement {
-    constructor() {
-      super();
+  (function(window, document) {
+    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
 
-      const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
-      const shadowRoot = this.attachShadow({mode: 'closed'});
-      shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#specialists-tpl').content, true));
+    class Specialists extends HTMLElement {
+      constructor() {
+        super();
 
-      const title = shadowRoot.querySelector('component-title');
-      title.goBack = () => this.goBack();
+        const shadowRoot = this.attachShadow({mode: 'closed'});
+        shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#specialists-tpl').content, true));
 
-      const addressButtons = shadowRoot.querySelectorAll('ol button');
-      for (const addressButton of addressButtons) {
-        addressButton.addEventListener('click', (e) => this.goForward(e.target.dataset.id));
+        const title = shadowRoot.querySelector('component-title');
+        title.goBack = () => this.goBack();
+
+        const addressButtons = shadowRoot.querySelectorAll('ol button');
+        for (const addressButton of addressButtons) {
+          addressButton.addEventListener('click', (e) => this.goForward(e.target.dataset.id));
+        }
       }
     }
-  }
 
-  customElements.define('appointment-specialists', Specialists);
-//    document.registerElement('appointment-specialists', Specialists);
+    customElements.define('appointment-specialists', Specialists);
+  })(window, document);
 </script>

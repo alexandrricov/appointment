@@ -27,11 +27,12 @@
 
 <script>
   (function(window, document) {
+    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+
     class Title extends HTMLElement {
       constructor() {
         super();
 
-        const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
         const shadowRoot = this.attachShadow({mode: 'closed'});
         shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#title-tpl').content, true));
 

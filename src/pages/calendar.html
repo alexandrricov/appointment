@@ -18,28 +18,30 @@
 </template>
 
 <script>
-  class Calendar extends HTMLElement {
-    constructor() {
-      super();
+  (function(window, document) {
+    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
 
-      const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
-      const shadowRoot = this.attachShadow({mode: 'closed'});
-      shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#calendar-tpl').content, true));
+    class Calendar extends HTMLElement {
+      constructor() {
+        super();
 
-      const title = shadowRoot.querySelector('component-title');
-      title.goBack = () => this.goBack();
-      title.goForward = () => this.goForward({
-        date: this.date.value,
-        time: this.time.value,
-      });
+        const shadowRoot = this.attachShadow({mode: 'closed'});
+        shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#calendar-tpl').content, true));
 
-      this.date = shadowRoot.querySelector('#date');
-      this.time = shadowRoot.querySelector('#time');
+        const title = shadowRoot.querySelector('component-title');
+        title.goBack = () => this.goBack();
+        title.goForward = () => this.goForward({
+          date: this.date.value,
+          time: this.time.value,
+        });
+
+        this.date = shadowRoot.querySelector('#date');
+        this.time = shadowRoot.querySelector('#time');
+      }
     }
-  }
 
-  customElements.define('appointment-calendar', Calendar);
-//    document.registerElement('appointment-calendar', Calendar);
+    customElements.define('appointment-calendar', Calendar);
+  })(window, document);
 </script>
 
 

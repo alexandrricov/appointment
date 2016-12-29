@@ -18,22 +18,25 @@
 </template>
 
 <script>
-  class Addresses extends HTMLElement {
-    constructor() {
-      super();
+  (function(window, document) {
+    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
 
-      const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
-      const shadowRoot = this.attachShadow({mode: 'closed'});
-      shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#addresses-tpl').content, true));
+    class Addresses extends HTMLElement {
+      constructor() {
+        super();
 
-      const addressButtons = shadowRoot.querySelectorAll('ol button');
-      for (const addressButton of addressButtons) {
-        addressButton.addEventListener('click', (e) =>
-          this.goForward(e.target.dataset.id));
+        const shadowRoot = this.attachShadow({mode: 'closed'});
+        const clone = document.importNode(ownerDocument.querySelector('#addresses-tpl').content, true);
+        shadowRoot.appendChild(clone);
+
+        const addressButtons = shadowRoot.querySelectorAll('ol button');
+        for (const addressButton of addressButtons) {
+          addressButton.addEventListener('click', (e) =>
+            this.goForward(e.target.dataset.id));
+        }
       }
     }
-  }
 
-  customElements.define('appointment-addresses', Addresses);
-//    document.registerElement('appointment-addresses', Addresses);
+    customElements.define('appointment-addresses', Addresses);
+  })(window, document);
 </script>
