@@ -1,0 +1,57 @@
+<link rel="import" href="../components/title.html">
+
+<template id="form-tpl">
+  <section>
+    <component-title back>Appointment</component-title>
+    <dl>
+      <dt>Date:</dt>
+      <dd>23 august, tuesday</dd>
+      <dt>Time:</dt>
+      <dd>15:00-16:00</dd>
+      <dt>Services:</dt>
+      <dd>Service 1, Service 2</dd>
+      <dt>Specialist:</dt>
+      <dd>Specialist 1</dd>
+      <dt>Price:</dt>
+      <dd>$28</dd>
+    </dl>
+    <form id="form">
+      <input type="text" name="name" placeholder="Name">
+      <input type="text" name="phone" placeholder="Phone">
+      <input type="email" name="email" placeholder="Email">
+      <input type="text" name="comment" placeholder="Comment">
+      <button type="button" id="submit">Sign up</button>
+    </form>
+  </section>
+</template>
+
+<script>
+  class Form extends HTMLElement {
+    constructor() {
+      super();
+
+      const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+      const shadowRoot = this.attachShadow({mode: 'closed'});
+      shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#form-tpl').content, true));
+
+      const title = shadowRoot.querySelector('component-title');
+      title.goBack = () => this.goBack();
+
+      shadowRoot.querySelector('#submit').addEventListener('click', () => {
+        this.goForward({
+          name: this.form.children.name.value,
+          phone: this.form.children.phone.value,
+          email: this.form.children.email.value,
+          comment: this.form.children.comment.value,
+        });
+      });
+
+      this.form = shadowRoot.querySelector('#form');
+    }
+  }
+
+  customElements.define('appointment-form', Form);
+//    document.registerElement('appointment-form', Form);
+</script>
+
+

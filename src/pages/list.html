@@ -1,0 +1,39 @@
+<template id="list-tpl">
+  <style>
+    li {
+      color: orange;
+    }
+  </style>
+  <ol>
+    <li><button type="button" address="1">Address 1</button></li>
+    <li><button type="button" address="2">Address 2</button></li>
+    <li><button type="button" address="3">Address 3</button></li>
+  </ol>
+</template>
+
+<script>
+  (function(window, document) {
+    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+    const addressesTpl = ownerDocument.querySelector('#list-tpl');
+
+    class List extends HTMLElement {
+      // Fires when an instance of the element is created.
+      createdCallback() {
+        const clone = document.importNode(addressesTpl.content, true);
+        const root = this.createShadowRoot();
+        root.appendChild(clone);
+      }
+      // Fires when an instance was inserted into the document.
+      attachedCallback() {
+      };
+      // Fires when an instance was detached from the document.
+      detachedCallback() {
+      }
+      // Fires when an attribute was added, removed, or updated.
+      attributeChangedCallback(attrName, oldVal, newVal) {
+      };
+    }
+
+    document.registerElement('x-list', List);
+  })(window, document);
+</script>

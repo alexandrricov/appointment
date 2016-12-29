@@ -1,0 +1,59 @@
+<template id="title-tpl">
+  <style>
+    h2 {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    button {
+      border: none;
+      background: transparent;
+      width: 40px;
+      font-size: 20px;
+      padding: 0;
+    }
+
+    #slot {
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+  <h2>
+    <button id="goBack">&larr;</button>
+    <div id="slot"><slot></slot></div>
+    <button id="goForward">&rarr;</button>
+  </h2>
+</template>
+
+<script>
+  (function(window, document) {
+    class Title extends HTMLElement {
+      constructor() {
+        super();
+
+        const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+        const shadowRoot = this.attachShadow({mode: 'closed'});
+        shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#title-tpl').content, true));
+
+        this.back = shadowRoot.querySelector('#goBack');
+
+        if (this.hasAttribute('back')) {
+          this.back.addEventListener('click', () => this.goBack());
+        } else {
+          this.back.style.display = 'none';
+        }
+
+        this.forward = shadowRoot.querySelector('#goForward');
+
+        if (this.hasAttribute('forward')) {
+          this.forward.addEventListener('click', () => this.goForward());
+        } else {
+          this.forward.style.display = 'none';
+        }
+      }
+    }
+
+    customElements.define('component-title', Title);
+    //    document.registerElement('appointment-addresses', Addresses);
+  })(window, document);
+</script>

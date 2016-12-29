@@ -1,0 +1,39 @@
+<link rel="import" href="../components/title.html">
+
+<template id="addresses-tpl">
+  <style>
+    button {
+      font-size: var(--font-size);
+    }
+  </style>
+
+  <section>
+    <component-title>Select address</component-title>
+    <ol>
+      <li><button type="button" data-id="1">Address 1</button></li>
+      <li><button type="button" data-id="2">Address 2</button></li>
+      <li><button type="button" data-id="3">Address 3</button></li>
+    </ol>
+  </section>
+</template>
+
+<script>
+  class Addresses extends HTMLElement {
+    constructor() {
+      super();
+
+      const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+      const shadowRoot = this.attachShadow({mode: 'closed'});
+      shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#addresses-tpl').content, true));
+
+      const addressButtons = shadowRoot.querySelectorAll('ol button');
+      for (const addressButton of addressButtons) {
+        addressButton.addEventListener('click', (e) =>
+          this.goForward(e.target.dataset.id));
+      }
+    }
+  }
+
+  customElements.define('appointment-addresses', Addresses);
+//    document.registerElement('appointment-addresses', Addresses);
+</script>

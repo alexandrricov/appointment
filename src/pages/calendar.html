@@ -1,0 +1,45 @@
+<link rel="import" href="../components/title.html">
+
+<template id="calendar-tpl">
+  <style>
+    input {
+      width: 100%;
+      height: var(--control-height);
+      box-sizing: border-box;
+      margin-bottom: var(--control-margin);
+    }
+  </style>
+
+  <section>
+    <component-title back forward>Select date and time</component-title>
+    <input type="date" name="date" id="date">
+    <input type="time" name="time" id="time">
+  </section>
+</template>
+
+<script>
+  class Calendar extends HTMLElement {
+    constructor() {
+      super();
+
+      const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+      const shadowRoot = this.attachShadow({mode: 'closed'});
+      shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#calendar-tpl').content, true));
+
+      const title = shadowRoot.querySelector('component-title');
+      title.goBack = () => this.goBack();
+      title.goForward = () => this.goForward({
+        date: this.date.value,
+        time: this.time.value,
+      });
+
+      this.date = shadowRoot.querySelector('#date');
+      this.time = shadowRoot.querySelector('#time');
+    }
+  }
+
+  customElements.define('appointment-calendar', Calendar);
+//    document.registerElement('appointment-calendar', Calendar);
+</script>
+
+

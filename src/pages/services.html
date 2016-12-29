@@ -1,0 +1,52 @@
+<link rel="import" href="../components/title.html">
+
+<template id="services-tpl">
+  <section>
+    <component-title back forward>Select services</component-title>
+    <ol>
+      <li>
+        <label for="service1">Service 1</label>
+        <input type="checkbox" name="services" id="service1" data-id="1">
+      </li>
+      <li>
+        <label for="service2">Service 2</label>
+        <input type="checkbox" name="services" id="service2" data-id="2">
+      </li>
+      <li>
+        <label for="service3">Service 3</label>
+        <input type="checkbox" name="services" id="service3" data-id="3">
+      </li>
+    </ol>
+  </section>
+</template>
+
+<script>
+    class Services extends HTMLElement {
+      constructor() {
+        super();
+
+        const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+        const shadowRoot = this.attachShadow({mode: 'closed'});
+        shadowRoot.appendChild(document.importNode(ownerDocument.querySelector('#services-tpl').content, true));
+
+        const title = shadowRoot.querySelector('component-title');
+        title.goBack = () => this.goBack();
+        title.goForward = () => {
+          const data = [];
+          for (const addressButton of this.addressButtons) {
+            if (addressButton.checked) {
+              data.push(addressButton.dataset.id);
+            }
+          }
+
+          this.goForward(data);
+        };
+
+        this.addressButtons = shadowRoot.querySelectorAll('ol input');
+      }
+    }
+
+    customElements.define('appointment-services', Services);
+//    document.registerElement('appointment-services', Services);
+</script>
+
