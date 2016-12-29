@@ -1,19 +1,88 @@
 <link rel="import" href="../components/title.html">
 
 <template id="specialists-tpl">
+  <style>
+    section {
+      padding-left: var(--control-margin);
+      padding-right: var(--control-margin);
+    }
+
+    ol {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    button {
+      height: var(--control-height);
+      padding: 0;
+      margin-bottom: var(--control-margin);
+      width: 100%;
+      border: none;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .img {
+      width: var(--control-height);
+      margin-right: var(--control-margin);
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 50%;
+    }
+
+    span {
+      font-size: var(--font-size);
+    }
+  </style>
   <section>
     <component-title back>Select specialist</component-title>
     <ol>
-      <li><button type="button" data-id="1"><img src="http://fakeimg.pl/30/">Specialist 1</button></li>
-      <li><button type="button" data-id="2"><img src="http://fakeimg.pl/30/">Specialist 2</button></li>
-      <li><button type="button" data-id="3"><img src="http://fakeimg.pl/30/">Specialist 3</button></li>
+      <li>
+        <button type="button" data-id="1">
+          <div class="img">
+            <img src="/img/person1.png">
+          </div>
+          <span>Specialist 1</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-id="2">
+          <div class="img">
+            <img src="/img/person2.png">
+          </div>
+          <span>Specialist 2</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-id="3">
+          <div class="img">
+            <img src="/img/person3.png">
+          </div>
+          <span>Specialist 3</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-id="4">
+          <div class="img">
+            <img src="/img/person4.png">
+          </div>
+          <span>Specialist 4</span>
+        </button>
+      </li>
     </ol>
   </section>
 </template>
 
 <script>
-  (function(window, document) {
-    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+  (function() {
+    const ownerDocument = document.currentScript.ownerDocument;
 
     class Specialists extends HTMLElement {
       constructor() {
@@ -33,5 +102,5 @@
     }
 
     customElements.define('appointment-specialists', Specialists);
-  })(window, document);
+  })();
 </script>

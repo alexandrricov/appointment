@@ -2,6 +2,11 @@
 
 <template id="calendar-tpl">
   <style>
+    section {
+      padding-left: var(--control-margin);
+      padding-right: var(--control-margin);
+    }
+
     input {
       width: 100%;
       height: var(--control-height);
@@ -18,8 +23,8 @@
 </template>
 
 <script>
-  (function(window, document) {
-    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+  (function() {
+    const ownerDocument = document.currentScript.ownerDocument;
 
     class Calendar extends HTMLElement {
       constructor() {
@@ -41,7 +46,7 @@
     }
 
     customElements.define('appointment-calendar', Calendar);
-  })(window, document);
+  })();
 </script>
 
 

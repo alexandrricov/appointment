@@ -20,14 +20,14 @@
   </style>
   <h2>
     <button id="goBack">&larr;</button>
-    <div id="slot"><slot></slot></div>
+    <div id="slot"><slot /></div>
     <button id="goForward">&rarr;</button>
   </h2>
 </template>
 
 <script>
-  (function(window, document) {
-    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+  (function() {
+    const ownerDocument = document.currentScript.ownerDocument;
 
     class Title extends HTMLElement {
       constructor() {
@@ -55,6 +55,5 @@
     }
 
     customElements.define('component-title', Title);
-    //    document.registerElement('appointment-addresses', Addresses);
-  })(window, document);
+  })();
 </script>

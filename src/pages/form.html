@@ -1,6 +1,12 @@
 <link rel="import" href="../components/title.html">
 
 <template id="form-tpl">
+  <style>
+    section {
+      padding-left: var(--control-margin);
+      padding-right: var(--control-margin);
+    }
+  </style>
   <section>
     <component-title back>Appointment</component-title>
     <dl>
@@ -26,8 +32,8 @@
 </template>
 
 <script>
-  (function(window, document) {
-    const ownerDocument = (document._currentScript || document.currentScript).ownerDocument;
+  (function() {
+    const ownerDocument = document.currentScript.ownerDocument;
 
     class Form extends HTMLElement {
       constructor() {
@@ -53,7 +59,7 @@
     }
 
     customElements.define('appointment-form', Form);
-  })(window, document);
+  })();
 </script>
 
 

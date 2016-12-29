@@ -26,7 +26,7 @@
       font-size: var(--font-size);
     }
 
-    #appointment {
+    #root {
       box-sizing: border-box;
       height: 100%;
     }
@@ -49,86 +49,86 @@
   <link rel="import" href="src/pages/form.html">
 </head>
 <body>
-  <section id="appointment">
+  <section id="root">
     <h1>Appointment</h1>
   </section>
 
   <script>
-    function initAddresses(_appointment) {
+    function initAddresses(root) {
       const node = document.createElement('appointment-addresses');
       node.goForward = (e) => {
         console.log(e);
 
-        _appointment.removeChild(node);
-        initServices(_appointment);
+        root.removeChild(node);
+        initServices(root);
       };
 
-      _appointment.appendChild(node);
+      root.appendChild(node);
     }
 
-    function initServices(_appointment) {
+    function initServices(root) {
       const node = document.createElement('appointment-services');
       node.goBack = () => {
-        _appointment.removeChild(node);
-        initAddresses(_appointment);
+        root.removeChild(node);
+        initAddresses(root);
       };
 
       node.goForward = (e) => {
         console.log(e);
-        _appointment.removeChild(node);
-        initCalendar(_appointment);
+        root.removeChild(node);
+        initCalendar(root);
       };
 
-      _appointment.appendChild(node);
+      root.appendChild(node);
     }
 
-    function initCalendar(_appointment) {
+    function initCalendar(root) {
       const node = document.createElement('appointment-calendar');
       node.goBack = () => {
-        _appointment.removeChild(node);
-        initServices(_appointment);
+        root.removeChild(node);
+        initServices(root);
       };
 
       node.goForward = (e) => {
         console.log(e);
-        _appointment.removeChild(node);
-        initSpecialists(_appointment);
+        root.removeChild(node);
+        initSpecialists(root);
       };
 
-      _appointment.appendChild(node);
+      root.appendChild(node);
     }
 
-    function initSpecialists(_appointment) {
+    function initSpecialists(root) {
       const node = document.createElement('appointment-specialists');
       node.goBack = () => {
-        _appointment.removeChild(node);
-        initCalendar(_appointment);
+        root.removeChild(node);
+        initCalendar(root);
       };
 
       node.goForward = (e) => {
         console.log(e);
-        _appointment.removeChild(node);
-        initForm(_appointment);
+        root.removeChild(node);
+        initForm(root);
       };
 
-      _appointment.appendChild(node);
+      root.appendChild(node);
     }
 
-    function initForm(_appointment) {
+    function initForm(root) {
       const node = document.createElement('appointment-form');
       node.goBack = () => {
-        _appointment.removeChild(node);
-        initSpecialists(_appointment);
+        root.removeChild(node);
+        initSpecialists(root);
       };
 
       node.goForward = (e) => {
         alert(JSON.stringify(e));
       };
 
-      _appointment.appendChild(node);
+      root.appendChild(node);
     }
 
-    initAddresses(document.querySelector('#appointment'));
+    initAddresses(document.querySelector('#root'));
   </script>
 </body>
 </html>
