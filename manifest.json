@@ -1,0 +1,9 @@
+{
+  "name": "Appointment scheduling",
+  "description": "Appointment scheduling application",
+  "short_name": "Appointment",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "theme_color": "green",
+  "background_color": "aliceblue",
+}
